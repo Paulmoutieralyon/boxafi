@@ -29,10 +29,11 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "express": "^4.16.4",
-    "immutable": "^4.0.0",
+    "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "mongodb": "^3.1.13",
+    "mongoose": "^5.4.14",
     "morgan": "^1.9.1",
     "sc-uws": "^10.148.2",
     "uws": "^10.148.1"
