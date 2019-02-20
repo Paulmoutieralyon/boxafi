@@ -13,4 +13,6 @@ npm install
 npm start
 }
 
+! don't forget to do mongod in the command :) 
+
 I hope everyone's going to work well.  enjoy! 
