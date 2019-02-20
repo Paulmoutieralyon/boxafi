@@ -6,7 +6,6 @@ import classNames from 'classnames'
 export default class UserForm extends Component {
 
     constructor(props) {
-
         super(props);
 
 
@@ -25,12 +24,9 @@ export default class UserForm extends Component {
 
         this.onClickOutside = this.onClickOutside.bind(this);
     }
-
     onClickOutside(event) {
 
         if (this.ref && !this.ref.contains(event.target)) {
-
-
             if (this.props.onClose) {
                 this.props.onClose();
             }
@@ -39,13 +35,11 @@ export default class UserForm extends Component {
     }
 
     componentDidMount() {
-
         window.addEventListener('mousedown', this.onClickOutside);
 
     }
 
     componentWillUnmount() {
-
         window.removeEventListener('mousedown', this.onClickOutside);
 
     }
@@ -53,7 +47,6 @@ export default class UserForm extends Component {
     onSubmit(event) {
         const {user, isLogin} = this.state;
         const {store} = this.props;
-
         event.preventDefault();
 
         this.setState({
@@ -63,17 +56,13 @@ export default class UserForm extends Component {
 
             if(isLogin){
                 store.login(user.email, user.password).then((user) => {
-
-
                     if (this.props.onClose) {
                         this.props.onClose();
                     }
 
 
                 }).catch((err) => {
-
                     console.log("err", err);
-
                     this.setState({
                         message: {
                             body: err,
@@ -113,12 +102,8 @@ export default class UserForm extends Component {
     onTextFieldChange(event) {
 
         let {user} = this.state;
-
-
         const field = event.target.name;
-
         user[field] = event.target.value;
-
         this.setState({
             user: user
         });

@@ -9,7 +9,6 @@ export default class UserBar extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             showUserForm: false,
             showUserMenu: false,
@@ -19,9 +18,7 @@ export default class UserBar extends Component {
     }
 
     render() {
-
         const {store} = this.props;
-
         const me = store.getCurrentUser();
         const profilePicture = _.get(me, 'avatar');
         const isConnected = store.isConnected();
@@ -46,15 +43,10 @@ export default class UserBar extends Component {
                 }}><img src={profilePicture ? profilePicture : avatar} alt=""/></div>
 
                 {!me && this.state.showUserForm ? <UserForm onClose={(msg) => {
-
-
                     this.setState({
                         showUserForm: false,
                     })
-
                 }} store={store}/> : null}
-
-
                 {this.state.showUserMenu ? <UserMenu
                     store={store}
                     onClose={() => {

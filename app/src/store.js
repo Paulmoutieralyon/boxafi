@@ -14,33 +14,25 @@ export default class Store {
 
 
         this.token = this.getTokenFromLocalStore();
-
         this.user = this.getUserFromLocalStorage();
         this.users = new OrderedMap();
-
         this.search = {
             users: new OrderedMap(),
         }
 
 
         this.realtime = new Realtime(this);
-
         this.fetchUserChannels();
 
 
     }
 
     isConnected(){
-
         return this.realtime.isConnected;
     }
     fetchUserChannels(){
-
         const userToken = this.getUserTokenId();
-
         if(userToken){
-
-
             const options = {
                 headers: {
                     authorization: userToken,
@@ -55,12 +47,8 @@ export default class Store {
 
                     this.realtime.onAddChannel(c);
                 });
-
-
                 const firstChannelId = _.get(channels, '[0]._id', null);
-
                 this.fetchChannelMessages(firstChannelId);
-
 
             }).catch((err) => {
 
@@ -74,17 +62,11 @@ export default class Store {
         user.avatar = this.loadUserAvatar(user);
         const id = _.toString(user._id);
         this.users = this.users.set(id, user);
-
-
         return user;
-
-
     }
-
     getUserTokenId() {
         return _.get(this.token, '_id', null);
     }
-
     loadUserAvatar(user) {
 
         return `https://cdn.icon-icons.com/icons2/35/PNG/512/supermanavatar_superhombr_2825.png/${user._id}.png`
@@ -94,11 +76,8 @@ export default class Store {
 
         // query to backend servr and get list of users.
         const data = {search: q};
-
         this.search.users = this.search.users.clear();
-
         this.service.post('api/users/search', data).then((response) => {
-
             // list of users matched.
             const users = _.get(response, 'data', []);
 
@@ -109,59 +88,44 @@ export default class Store {
 
                 user.avatar = this.loadUserAvatar(user);
                 const userId = `${user._id}`;
-
                 this.users = this.users.set(userId, user);
                 this.search.users = this.search.users.set(userId, user);
 
 
             });
 
-
             // update component
             this.update();
-
-
         }).catch((err) => {
-
-
             //console.log("searching errror", err);
         })
 
     }
 
     setUserToken(accessToken) {
-
         if (!accessToken) {
-
             this.localStorage.removeItem('token');
             this.token = null;
 
             return;
         }
-
         this.token = accessToken;
         localStorage.setItem('token', JSON.stringify(accessToken));
-
     }
 
     getTokenFromLocalStore() {
-
-
         if (this.token) {
             return this.token;
         }
-
         let token = null;
 
         const data = localStorage.getItem('token');
         if (data) {
 
             try {
-
                 token = JSON.parse(data);
             }
             catch (err) {
-
                 console.log(err);
             }
         }
@@ -178,17 +142,13 @@ export default class Store {
             user = JSON.parse(data);
         }
         catch (err) {
-
             console.log(err);
         }
 
-
         if (user) {
-
             // try to connect to backend server and verify this user is exist.
             const token = this.getTokenFromLocalStore();
             const tokenId = _.get(token, '_id');
-
             const options = {
                 headers: {
                     authorization: tokenId,
@@ -200,12 +160,10 @@ export default class Store {
 
                 const accessToken = response.data;
                 const user = _.get(accessToken, 'user');
-
                 this.setCurrentUser(user);
                 this.setUserToken(accessToken);
 
             }).catch(err => {
-
                 this.signOut();
 
             });
@@ -235,7 +193,6 @@ export default class Store {
     }
 
     clearCacheData(){
-
         this.channels = this.channels.clear();
         this.messages = this.messages.clear();
         this.users = this.users.clear();

@@ -7,11 +7,9 @@ export default class Realtime {
 
 
     constructor(store) {
-
         this.store = store;
         this.ws = null;
         this.isConnected = false;
-
         this.connect();
         this.reconnect();
     }
@@ -20,14 +18,10 @@ export default class Realtime {
     reconnect(){
 
         const store = this.store;
-
         window.setInterval(()=>{
-
             const user = store.getCurrentUser();
             if(user && !this.isConnected){
-
                 console.log("try reconnecting...");
-
                 this.connect();
             }
 
@@ -35,11 +29,8 @@ export default class Realtime {
     }
 
     decodeMessage(msg) {
-
         let message = {};
-
         try {
-
             message = JSON.parse(msg);
 
         }
@@ -47,12 +38,10 @@ export default class Realtime {
 
             console.log(err);
         }
-
         return message;
     }
 
     readMessage(msg) {
-
         const store = this.store;
         const currentUser = store.getCurrentUser();
         const currentUserId = _.toString(_.get(currentUser, '_id'));
@@ -77,12 +66,10 @@ export default class Realtime {
             case 'message_added':
 
                     const activeChannel = store.getActiveChannel();
-
                     let notify = _.get(activeChannel, '_id') !== _.get(payload, 'channelId') && currentUserId !== _.get(payload, 'userId');
                     this.onAddMessage(payload, notify);
 
                 break;
-
             case 'channel_added':
 
                 // to do check payload object and insert new channel to store.
